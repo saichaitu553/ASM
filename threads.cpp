@@ -3,43 +3,43 @@
 #include<mutex>
 
 using namespace std;
-class b
+class OBase
 {
     public:
-    void p(int x)
+    void Print(int m_test)
     {
-        cout<<"Non-static member function"<<x<<endl;
+        cout<<"Non-static member function"<<m_test<<endl;
     }
-    void operator ()(int x)
+    void operator ()(int m_test)
     {
-        cout<<"functor(function object)"<<x<<endl;
+        cout<<"functor(function object)"<<m_test<<endl;
     }
 };
 
-void f(int x)
+void Fun(int m_test)
 {
-    cout<<"function pointer"<<x<<endl;
+    cout<<"function pointer"<<m_test<<endl;
 }
 
-mutex m;
-int g=0;
-void adm(int x)
+mutex mutex0;
+int globalVar=0;
+void adm(int m_test)
 {//try_lock(m1,m2....mn) it locks all lockable options at the same time like mutex etc.true -1 return else index
  // if one fails all are unlocked
-    m.lock();//m.try_lock() locks if free and returns true if busy goes back retuens false and skips
-    cout<<"lock by"<<x<<endl;
-    ++g;
-    m.unlock();
+    mutex0.lock();//m.try_lock() locks if free and returns true if busy goes back retuens false and skips
+    cout<<"lock by"<<m_test<<endl;
+    ++globalVar;
+    mutex0.unlock();
 }
 
 //timed mutex
-timed_mutex m1;
+timed_mutex mutex1;
 void i(int x)
 {
-    if(m1.try_lock_for(chrono::seconds(1)))
+    if(mutex1.try_lock_for(chrono::seconds(1)))
     {
-        ++g;
-        m1.unlock();
+        ++globalVar;
+        mutex1.unlock();
         cout<<x<<"entered"<<endl;
     }
     else
@@ -50,32 +50,32 @@ void i(int x)
 
 int main()
 {
-    b b1;
-    auto l=[](int x)
+    OBase base1;
+    auto lamda=[](int x)
     {
         cout<<"lamda function"<<x<<endl;
     };
 
-    thread t1(f, 1);
-    thread t2((b()),3);
-    thread t3(&b::p,&b1,4);
-    thread t4(l,2);
-    t1.join();
-    t2.join();
-    t3.join();
-    t4.join();
+    thread thread1(Fun, 1);
+    thread thread2((OBase()),3);
+    thread thread3(&OBase::Print,&base1,4);
+    thread thread4(lamda,2);
+    thread1.join();
+    thread2.join();
+    thread3.join();
+    thread4.join();
 
-    thread t5(adm,5);
-    thread t6(adm,6);
-    t5.join();
-    t6.join();
-    cout<<g<<endl;
+    thread thread5(adm,5);
+    thread thread6(adm,6);
+    thread5.join();
+    thread6.join();
+    cout<<globalVar<<endl;
 
-    thread t7(i,7);
-    thread t8(i,8);
-    t7.join();
-    t8.join();
-    cout<<g<<endl;
+    thread thread7(i,7);
+    thread thread8(i,8);
+    thread7.join();
+    thread8.join();
+    cout<<globalVar<<endl;
 
     return 0;
 }
