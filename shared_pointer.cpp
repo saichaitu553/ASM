@@ -2,23 +2,23 @@
 #include<memory>
 using namespace std;
 
-class SP
+class OSharedPtr
 {
     private:
-    int x;
+    int m_test;
     public:
-    explicit SP(int x): x{x} {};//creating member variables this.x=x;
-    int getx()
+    explicit OSharedPtr(int m_test): m_test{m_test} {};//creating member variables this.x=x;
+    int getTest()
     {
-        return x;
+        return m_test;
     }
 };
 
 int main()
 {
-    shared_ptr<SP> sp(new SP(10));
-    cout<< sp->getx() << " "<<sp.use_count() << endl;
-    shared_ptr<SP> sp1{sp};
-    cout<< sp1->getx() << " " << sp1.use_count() << " " <<sp.use_count()<< endl;
+    shared_ptr<OSharedPtr> sharedPtr(new OSharedPtr(10));
+    cout<< sharedPtr->getTest() << " "<<sharedPtr.use_count() <<endl;
+    shared_ptr<OSharedPtr> sharedPtr1{sharedPtr};
+    cout<< sharedPtr1->getTest() << " " << sharedPtr1.use_count() << " " <<sharedPtr.use_count()<< endl;
     return 0;
 }
