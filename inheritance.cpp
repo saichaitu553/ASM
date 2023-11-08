@@ -4,67 +4,67 @@ using namespace std;
 class Final
 {
     Final();
-    friend class bike;
+    friend class OBike; 
 };
-class vehicle
+class OVehicle
 {
     public:
-    vehicle()
+    OVehicle()
     {
         cout<<"drive"<<endl;
     }
 };
-class car : public virtual vehicle//single if no bike
+class OCar : public virtual OVehicle//single if no OBike
 {
     public:
-    car()
+    OCar()
     {
         cout<<"4 wheels"<<endl;
     }
 };
-class bike : public vehicle, virtual public Final//hirarchial non derivable class due to Final
+class OBike : public OVehicle, virtual public Final//hirarchial non derivable class due to Final
 {
     public:
-    bike()
+    OBike()
     {
         cout<<"2 wheels"<<endl;
     }
 };
-/*class sedan
+/*class OSedan
 {
     public:
-    sedan()
+    OSedan()
     {
         cout<<"sedan"<<endl;
     }
 };*/
-class suv : public virtual car//multilevel
+class OSuv : public virtual OCar//multilevel
 {
     public:
-    suv()
+    OSuv()
     {
         cout<<"7 seater"<<endl;
     }
 
 };
-class cross : public virtual car, public virtual suv//multiple -- vehicle not allowd due to ambiguity hence virtual
+class OCross : public virtual OCar, public virtual OSuv//multiple -- vehicle not allowd due to ambiguity hence virtual
 {
     public:
-    cross()
+    OCross()
     {
         cout<<"5 seater"<<endl;
     }
 };
 int main()
 {
-    vehicle v;
+    OVehicle vehicle;
     cout<<endl;
-    car c;
+    OCar car;
     cout<<endl;
-    bike b;
+    OBike bike;
     cout<<endl;
-    suv s;
+    OSuv suv;
     cout<<endl;
-    cross cr;
+    OCross cross;
     return 0;
 }
