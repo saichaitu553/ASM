@@ -2,25 +2,25 @@
 #include<memory>
 using namespace std;
 
-class UP
+class OUniquePtr
 {
     private:
-    int x;
+    int m_test;
     public:
-    explicit UP(int x): x{x} {};//creating member variables this.x=x;
-    int getx()
+    explicit OUniquePtr(int m_test): m_test{m_test} {};//creating member variables this.x=x;
+    int getTest()
     {
-        return x;
+        return m_test;
     }
 };
 int main()
 {
-    unique_ptr<UP> up=make_unique<UP>(20);// thi s function helps in error handling
+    unique_ptr<OUniquePtr> uniquePtr=make_unique<OUniquePtr>(20);// this function helps in error handling
     //unique_ptr<UP> up2{up}; //copy constructor id deleted
-    unique_ptr<UP> up1=make_unique<UP>(100);
-    cout<< up->getx() << up1->getx() <<endl;
-    unique_ptr<UP> up2{move(up1)};//or up1.release() to delete in up1 and move to up2 or reset() where up1 
+    unique_ptr<OUniquePtr> uniquePtr1=make_unique<OUniquePtr>(100);
+    cout<< uniquePtr->getTest() << uniquePtr1->getTest() <<endl;
+    unique_ptr<OUniquePtr> uniquePtr2{move(uniquePtr1)};//or up1.release() to delete in up1 and move to up2 or reset() where up1 
     //pointer it self is deleted
-    cout<< up2->getx()<<endl;//printing up1 gives error;
+    cout<< uniquePtr2->getTest()<<endl;//printing up1 gives error;
     return 0;
 }
