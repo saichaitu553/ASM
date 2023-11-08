@@ -1,32 +1,32 @@
 #include<iostream>
 using namespace std;
 
-class SP//smart pointer
+class OSmartPtr//smart pointer
 {
     private:
-    int* data;
+    int* m_data;
     public:
-    explicit SP(int *p)//explicit is to avoid implicit conversion
+    explicit OSmartPtr(int *m_test)//explicit is to avoid implicit conversion
     {
-        data=p;
+        m_data=m_test;
     }
     int& operator *()
     {
-        return *data;
+        return *m_data;
     }
-    virtual ~SP()
+    virtual ~OSmartPtr()
     {
         cout<<"deleted pointed"<<endl;
-        delete data;
+        delete m_data;
     }
 };
 
 int main()
 {
-    int a=10;
-    int* p=&a;
+    int ref=10;
+    int* test=&ref;
     cout<<"pointer created"<<endl;
-    SP sp=SP(p);
-    cout<<*sp<<endl;
+    OSmartPtr smartPtr=OSmartPtr(test);
+    cout<<*smartPtr<<endl;
     return 0;
 }
